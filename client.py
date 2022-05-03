@@ -1,16 +1,19 @@
 import requests
 import json
 
-addr = 'http://localhost:5000'
-test_url = addr + '/api/test'
 
-# prepare headers for http request
-content_type = 'image/jpeg'
-headers = {'content-type': content_type}
+img_file = 'bored_ape.png'
+img_file = 'crypto_kitty.png'
 
-img_file = '/home/ec2-user/images/logoonly.png'
+addr = 'http://ec2-54-202-171-244.us-west-2.compute.amazonaws.com:5000/api/test'
 
+headers = {'content-type': 'image/jpeg'}
 
 img = open(img_file, 'rb').read()
-response = requests.post(test_url, data=img, headers=headers)
-print(response.content)
+
+response = requests.post(addr, data=img, headers=headers)
+
+token_dict = json.loads(response.content.decode('utf-8'))
+
+for k,v in token_dict.items():
+    print(v, k)
